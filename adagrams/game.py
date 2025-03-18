@@ -147,15 +147,16 @@ def draw_letters():
     return letter_bank
 
 def uses_available_letters(word, letter_bank):
-    letter_count_in_word = list(word.upper())
+    letters_in_word = list(word.upper())
     
     is_valid = False
 
     for letter in word:
-        if word.count(letter) > 0 and letter_count_in_word.count(letter) <= letter_bank.count(letter):
+        if word.count(letter) > 0 and \
+           letters_in_word.count(letter) <= letter_bank.count(letter):
             continue
         else:
-            is_valid = False
+            return is_valid
     
     is_valid = True
 
