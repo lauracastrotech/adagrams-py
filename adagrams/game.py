@@ -152,8 +152,7 @@ def uses_available_letters(word, letter_bank):
     is_valid = False
 
     for letter in word:
-        if word.count(letter) > 0 and \
-           letters_in_word.count(letter) <= letter_bank.count(letter):
+        if word.count(letter) > 0 and letters_in_word.count(letter) <= letter_bank.count(letter):
             continue
         else:
             return is_valid
@@ -163,7 +162,28 @@ def uses_available_letters(word, letter_bank):
     return is_valid
 
 def score_word(word):
-    pass
+    SCORE_CHART = {
+        1 : ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'],
+        2 : ['D', 'G'],
+        3 : ['B', 'C', 'M', 'P'],
+        4 : ['F', 'H', 'V', 'W', 'Y' ],
+        5 : ['K'],
+        8 : ['J', 'X' ],
+        10 : ['Q', 'Z']
+    }
+    BONUS_POINTS = 8
+    score = 0
+    make_word_same_case = word.upper()
+
+    for letter in make_word_same_case:
+        for points, letters in SCORE_CHART.items():
+            if letter in letters:
+                score += points
+
+    if len(word) >= 7:
+        score += BONUS_POINTS
+
+    return score
 
 def get_highest_word_score(word_list):
     pass
