@@ -185,15 +185,32 @@ def score_word(word):
 
     return score
 
-# def get_highest_word_score(word_list):
-    # create helper function build word list dict
-    # variable to initialize top score
-    # variable to initialize top score count
-    # loop through the dictionary 
-    # get score of each word
-    # is the current score greater than the top score
-    # if it is, then assign top score to current score
-    # if it is not greater than the top score continue to next iteration
+def get_highest_word_score(word_list):
+    word_list_with_scores = build_word_list_with_scores(word_list)
+    top_score = 0
+    top_score_count = 0
+    multiple_top_scores = []
+    multiple_10_letter_words = []
+    top_score_word = ''
+
+    for current_score in word_list_with_scores:
+        if current_score[1] >= top_score:
+            if current_score[1] == top_score:
+                top_score_count += 1
+                multiple_top_scores.append(current_score)
+            top_score = current_score[1]
+            top_score_word = current_score[0]
+
+    if len(multiple_top_scores) > 1 and top_score_count:
+        for current_word in multiple_top_scores:
+            if current_word[0] == 10:
+                multiple_10_letter_words.append(current_word[0])
+        if len(multiple_10_letter_words) > 1:
+            top_score_word = multiple_10_letter_words[0]
+            top_score = multiple_10_letter_words[1]
+    
+    return tuple(top_score, top_score_word)
+    
     # if top score count is greater than 1 implment tie breaking logic
     # is the word length 10, then this score is top score over word with less letters
     # are there multiple 10 letter words that are top scores, the first 10 letter word wins
@@ -209,13 +226,12 @@ def reset_available_letters(available_letters):
 
 def build_word_list_with_scores(word_list):
     word_list_with_scores = []
+
     for word in word_list:
         current_score = score_word(word)
         word_list_with_scores.append([word, current_score])
-        print(f'{word=}')
-        print(f'{current_score=}')
+    
     return word_list_with_scores
 
-print(build_word_list_with_scores(["AAAAAAAAAA", "BBBBBB"]))
-
+# print(build_word_list_with_scores(["AAAAAAAAAA", "BBBBBB"]))
 # print(draw_letters())
