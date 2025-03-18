@@ -173,9 +173,9 @@ def score_word(word):
     }
     BONUS_POINTS = 8
     score = 0
-    make_word_same_case = word.upper()
+    word_same_case = word.upper()
 
-    for letter in make_word_same_case:
+    for letter in word_same_case:
         for points, letters in SCORE_CHART.items():
             if letter in letters:
                 score += points
@@ -185,8 +185,20 @@ def score_word(word):
 
     return score
 
-def get_highest_word_score(word_list):
-    pass
+# def get_highest_word_score(word_list):
+    # create helper function build word list dict
+    # variable to initialize top score
+    # variable to initialize top score count
+    # loop through the dictionary 
+    # get score of each word
+    # is the current score greater than the top score
+    # if it is, then assign top score to current score
+    # if it is not greater than the top score continue to next iteration
+    # if top score count is greater than 1 implment tie breaking logic
+    # is the word length 10, then this score is top score over word with less letters
+    # are there multiple 10 letter words that are top scores, the first 10 letter word wins
+    # convert top score to tuple
+    # return top score
 
 def get_index_of_letter():
     return randint(0, len(available_letters) - 1)
@@ -195,4 +207,15 @@ def reset_available_letters(available_letters):
     for letter in range(len(available_letters)):
         available_letters[letter]['is_not_available'] = False
 
-print(draw_letters())
+def build_word_list_with_scores(word_list):
+    word_list_with_scores = []
+    for word in word_list:
+        current_score = score_word(word)
+        word_list_with_scores.append([word, current_score])
+        print(f'{word=}')
+        print(f'{current_score=}')
+    return word_list_with_scores
+
+print(build_word_list_with_scores(["AAAAAAAAAA", "BBBBBB"]))
+
+# print(draw_letters())
