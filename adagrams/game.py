@@ -186,46 +186,27 @@ def score_word(word):
     return score
 
 def get_highest_word_score(word_list):
-    # Build 2D list where each element is a 2 item list of word and score
-    word_list_with_scores = build_word_list_with_scores(word_list)
-    # Initilize variable to track top score
+    # Build dict where key is score and value is list of letter in word
+    words_and_scores = build_words_and_scores_dict(word_list)
+    # Set top score to track against current score
     top_score = 0
-    # Initialize list to store multiple top scores
-    multiple_top_scores = []
-    # Initialize list to store multiple top scores with word length 10
-    multiple_10_letter_words = []
-    # Initialize variable to track top score word
-    top_score_word = ''
-    # Loop through 2D list where current score is ['word',score]
-    for current_score in word_list_with_scores:
-        # Check to see if the score if greater than or equal to the top score
-        if current_score[1] >= top_score:
-            # Check to see if the score equals the top score
-            if current_score[1] == top_score:
-                # Increment top score counter
-                top_score_count += 1
-                # Add current score ['word',score] to list tracking multiple top scores            
-                multiple_top_scores.append(current_score)
-            # If the score is greater than top_score, set as top score
-            top_score = current_score[1]
-            # Assign word to top_score_word
-            top_score_word = current_score[0]
-    # Check if there are multiple top score words
-    if len(multiple_top_scores) > 1:
-        # Loop through 2D list
-        for current_word in multiple_top_scores:
-            # Check if the length of the word is 10
-            if current_word[0] == 10:
-                # Add 10 letter word to list
-                multiple_10_letter_words.append(current_word[0])
-        # Check if there are multiple 10 letter words    
-        if len(multiple_10_letter_words) > 1:
-            # Assign the top score word
-            top_score_word = multiple_10_letter_words[0]
-            # Assign the top score
-            top_score = multiple_10_letter_words[1]
-    # Return a tuple
-    return tuple(top_score, top_score_word)
+    # Add any key value pair where the keys is the top score
+    current_highest_scores = []
+    # List to be coverted to tuple
+    winning_word_and_score = []
+    # Loop through dict {score : [w,o,r,d]}
+    for current_score, current_word in words_and_scores.items():
+        # if first score assign first score to top score
+        if top_score == 0 or current_score == top_score:
+            top_score = current_score
+            current_highest_scores.append([current_score, current_word])
+        elif current_score > top_score:
+            current_highest_scores[0] = [current_score, current_word]
+    # Check for a tie
+    if len(current_highest_scores) > 1:
+        winning_word_and_score = check_for_a_tie(current_highest_scores)
+    # return tuple and convert dict
+    return tuple(winning_word_and_score)
 
 def get_index_of_letter():
     return randint(0, len(available_letters) - 1)
@@ -234,14 +215,30 @@ def reset_available_letters(available_letters):
     for letter in range(len(available_letters)):
         available_letters[letter]['is_not_available'] = False
 
-def build_word_list_with_scores(word_list):
-    word_list_with_scores = []
+def build_words_and_scores_dict(word_list):
+    words_with_scores_dict = {}
 
     for word in word_list:
         current_score = score_word(word)
-        word_list_with_scores.append([word, current_score])
+        words_with_scores_dict[current_score] = [list(word)]
     
-    return word_list_with_scores
+    return words_with_scores_dict
 
-# print(build_word_list_with_scores(["AAAAAAAAAA", "BBBBBB"]))
-# print(draw_letters())
+def check_for_a_tie(words_scores_dict):
+    # input list
+    # output 2 element list where first element is word, and second element is score
+    winning_word = []
+    words_with_same_len = [] # may not be necessary
+
+    for current_score, current_word in words_scores_dict:
+        
+        # if the len of word is ten make winning score
+        if not winning_word:
+            if len(current_word) == 10:
+                winning_word.append({current_score:current_word})
+            winning_word.append({current_score:current_word})
+        # else if len of current word is < than len winning_word[0] than winning_word [0] becomes current word
+        elif len[current_word] < len(winning_word[0][current_score]):
+            winning_word[0] = {current_score: current_word} 
+    return winning_word
+
