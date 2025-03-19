@@ -186,36 +186,46 @@ def score_word(word):
     return score
 
 def get_highest_word_score(word_list):
+    # Build 2D list where each element is a 2 item list of word and score
     word_list_with_scores = build_word_list_with_scores(word_list)
+    # Initilize variable to track top score
     top_score = 0
-    top_score_count = 0
+    # Initialize list to store multiple top scores
     multiple_top_scores = []
+    # Initialize list to store multiple top scores with word length 10
     multiple_10_letter_words = []
+    # Initialize variable to track top score word
     top_score_word = ''
-
+    # Loop through 2D list where current score is ['word',score]
     for current_score in word_list_with_scores:
+        # Check to see if the score if greater than or equal to the top score
         if current_score[1] >= top_score:
+            # Check to see if the score equals the top score
             if current_score[1] == top_score:
+                # Increment top score counter
                 top_score_count += 1
+                # Add current score ['word',score] to list tracking multiple top scores            
                 multiple_top_scores.append(current_score)
+            # If the score is greater than top_score, set as top score
             top_score = current_score[1]
+            # Assign word to top_score_word
             top_score_word = current_score[0]
-
-    if len(multiple_top_scores) > 1 and top_score_count:
+    # Check if there are multiple top score words
+    if len(multiple_top_scores) > 1:
+        # Loop through 2D list
         for current_word in multiple_top_scores:
+            # Check if the length of the word is 10
             if current_word[0] == 10:
+                # Add 10 letter word to list
                 multiple_10_letter_words.append(current_word[0])
+        # Check if there are multiple 10 letter words    
         if len(multiple_10_letter_words) > 1:
+            # Assign the top score word
             top_score_word = multiple_10_letter_words[0]
+            # Assign the top score
             top_score = multiple_10_letter_words[1]
-    
+    # Return a tuple
     return tuple(top_score, top_score_word)
-    
-    # if top score count is greater than 1 implment tie breaking logic
-    # is the word length 10, then this score is top score over word with less letters
-    # are there multiple 10 letter words that are top scores, the first 10 letter word wins
-    # convert top score to tuple
-    # return top score
 
 def get_index_of_letter():
     return randint(0, len(available_letters) - 1)
