@@ -195,16 +195,19 @@ def get_highest_word_score(word_list):
     # List to be coverted to tuple
     winning_word_and_score = []
     # Loop through dict {score : [w,o,r,d]}
-    for current_score, current_word in words_and_scores.items():
+    for current_word, current_score in words_and_scores.items():
         # if first score assign first score to top score
         if top_score == 0 or current_score == top_score:
             top_score = current_score
-            current_highest_scores.append([current_score, current_word])
+            current_highest_scores.append([current_word, current_score])
         elif current_score > top_score:
-            current_highest_scores[0] = [current_score, current_word]
+            top_score = current_score
+            current_highest_scores[0] = [current_word, current_score]
     # Check for a tie
     if len(current_highest_scores) > 1:
         winning_word_and_score = check_for_a_tie(current_highest_scores)
+    else:
+        winning_word_and_score = current_highest_scores[0]
     # return tuple and convert dict
     return tuple(winning_word_and_score)
 
@@ -220,7 +223,7 @@ def build_words_and_scores_dict(word_list):
 
     for word in word_list:
         current_score = score_word(word)
-        words_with_scores_dict[current_score] = [list(word)]
+        words_with_scores_dict[word] = current_score
     
     return words_with_scores_dict
 
@@ -230,15 +233,14 @@ def check_for_a_tie(words_scores_dict):
     winning_word = []
     words_with_same_len = [] # may not be necessary
 
-    for current_score, current_word in words_scores_dict:
-        
+    for current_word, current_score in words_scores_dict.items():
         # if the len of word is ten make winning score
         if not winning_word:
             if len(current_word) == 10:
-                winning_word.append({current_score:current_word})
-            winning_word.append({current_score:current_word})
+                winning_word.append([current_word, current_score])
+            winning_word.append([current_word, current_score])
         # else if len of current word is < than len winning_word[0] than winning_word [0] becomes current word
         elif len[current_word] < len(winning_word[0][current_score]):
-            winning_word[0] = {current_score: current_word} 
+            winning_word = [current_word, current_score]
     return winning_word
 
