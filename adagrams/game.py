@@ -123,9 +123,9 @@ def reset_available_letters(available_letters):
 def build_words_and_scores_dict(word_list):
     words_with_scores_dict = {}
 
-    for word in word_list:
-        current_score = score_word(word)
-        words_with_scores_dict[word] = current_score
+    for current_word in word_list:
+        current_score = score_word(current_word)
+        words_with_scores_dict[current_word] = current_score
     
     return words_with_scores_dict
 
