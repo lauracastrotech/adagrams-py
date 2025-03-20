@@ -227,20 +227,23 @@ def build_words_and_scores_dict(word_list):
     
     return words_with_scores_dict
 
-def check_for_a_tie(words_scores_dict):
-    # input list
-    # output 2 element list where first element is word, and second element is score
-    winning_word = []
-    words_with_same_len = [] # may not be necessary
-
-    for current_word, current_score in words_scores_dict.items():
-        # if the len of word is ten make winning score
-        if not winning_word:
-            if len(current_word) == 10:
-                winning_word.append([current_word, current_score])
-            winning_word.append([current_word, current_score])
-        # else if len of current word is < than len winning_word[0] than winning_word [0] becomes current word
-        elif len[current_word] < len(winning_word[0][current_score]):
-            winning_word = [current_word, current_score]
-    return winning_word
+def check_for_a_tie(words_and_scores):
+    winning_word_and_score = []
+    words_with_same_len = [] 
+    
+    for current_word_and_score in range(len(words_and_scores)):
+        if not winning_word_and_score:
+            winning_word_and_score = words_and_scores[current_word_and_score]
+        # Is the length of the word 10    
+        if len(words_and_scores[current_word_and_score][0]) == 10:
+            winning_word_and_score = words_and_scores[current_word_and_score]
+            break
+        # Is the length of the word the same length as the current winning word 
+        elif len(words_and_scores[current_word_and_score][0]) == len(winning_word_and_score[0]):
+            words_with_same_len.append(words_and_scores[current_word_and_score])
+        # Is the length of the word less than the length of the current winning word
+        elif len(words_and_scores[current_word_and_score][0]) < len(winning_word_and_score[0]):
+            winning_word_and_score = words_and_scores[current_word_and_score]
+    print(winning_word_and_score)
+    return winning_word_and_score
 
