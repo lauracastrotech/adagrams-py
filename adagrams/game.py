@@ -95,22 +95,22 @@ def score_word(word):
 def get_highest_word_score(word_list):
     words_and_scores = build_words_and_scores_dict(word_list)
     top_score = 0
-    current_highest_scores = []
+    highest_scores = []
     winning_word_and_score = []
 
     for current_word, current_score in words_and_scores.items():
         if top_score == 0 or current_score == top_score:
             top_score = current_score
-            current_highest_scores.append([current_word, current_score])
+            highest_scores.append([current_word, current_score])
         elif current_score > top_score:
             top_score = current_score
-            current_highest_scores[0] = [current_word, current_score]
+            highest_scores[0] = [current_word, current_score]
     
-    if len(current_highest_scores) > 1:
-        winning_word_and_score = check_for_a_tie(current_highest_scores)
+    if len(highest_scores) > 1:
+        winning_word_and_score = check_for_a_tie(highest_scores)
     else:
-        winning_word_and_score = current_highest_scores[0]
-        
+        winning_word_and_score = highest_scores[0]
+
     return tuple(winning_word_and_score)
 
 def get_index_of_letter():
