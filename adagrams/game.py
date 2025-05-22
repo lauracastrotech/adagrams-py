@@ -29,13 +29,16 @@ LETTER_POOL = {
 }
 
 def draw_letters():
-    letter_bank = []
+    letter_bank = ['A','A','A','A','A','A','A','A','A', 'B','B', 'C', 'C', 'D', 'D', 'E', 'E','E','E','E','E','E','E','E','E','E','E', 'F', 'F', 'G', 'G', 'G', 'H', 'H', 'I', 'I','I','I','I','I','I','I','I','J', 'K', 'L','L','L','L', 'M', 'M', 'N','N','N','N','N','N', 'O', 'O','O','O','O','O','O','O', 'P', 'P', 'Q', 'R','R','R','R','R','R', 'S', 'S','S','S', 'T', 'T', 'T','T','T','T', 'U','U','U','U', 'V', 'V', 'W', 'W', 'X', 'Y', 'Y', 'Z']
     available_letters = build_letters_and_availability_list(LETTER_POOL)
-    
+    # let pile = makePile() helper or list coomprehennsion to build based on letter distribution
+    # const numTilesAllowedInHand = 10
     while len(letter_bank) < 10:
-        index_of_letter = get_index_of_letter()
+        # for loop in range 10
+        index_of_letter = get_index_of_letter() # refactor - const getRandIndex() 
 
         if not available_letters[index_of_letter]['is_not_available']:
+    
             letter_bank.append(available_letters[index_of_letter]['letter'])
             available_letters[index_of_letter]['is_not_available'] = True
 
@@ -51,7 +54,7 @@ def build_letters_and_availability_list(letter_pool):
             available_letters.append({'letter':letter, 'is_not_available':False})
     
     return available_letters
-     
+
 def uses_available_letters(word, letter_bank):
     letters_in_word = list(word.upper())
     is_valid = False
